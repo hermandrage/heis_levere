@@ -15,7 +15,7 @@ void update_all_lights(void){
   set_down_button_lights();
 }
 
-void actual_set_floor_lights(void){  //turns on the light in the floor indicators, depending on which floor the elevator is in
+void actual_set_floor_lights(void){
   if (get_current_floor() >=0 && get_current_floor() <N_FLOORS && elev_get_floor_indicator_matrix(get_current_floor())==0){
     elev_set_floor_indicator(get_current_floor());
     set_floor_indicator_lights_matrix(get_current_floor());
@@ -23,7 +23,7 @@ void actual_set_floor_lights(void){  //turns on the light in the floor indicator
 }
 
 
-void set_command_button_lights(void){ //Sets lights in command buttons when pressed, turns them off when order's executed.
+void set_command_button_lights(void){
   for (int etg = 0 ; etg<4 ; ++etg){
     if (elev_get_button_signal(BUTTON_COMMAND,etg)){
       elev_set_button_lamp(BUTTON_COMMAND,etg,1);
@@ -37,7 +37,7 @@ void set_command_button_lights(void){ //Sets lights in command buttons when pres
 }
 
 
-void set_up_button_lights(void){ //Sets lights in up_buttons when pressed, turns them off when order's executed.
+void set_up_button_lights(void){
   for (int etg = 0 ; etg<(N_FLOORS-1) ; ++etg){
     if (elev_get_button_signal(BUTTON_CALL_UP,etg)){
       elev_set_button_lamp(BUTTON_CALL_UP,etg,1);
@@ -50,7 +50,7 @@ void set_up_button_lights(void){ //Sets lights in up_buttons when pressed, turns
   }
 }
 
-void set_down_button_lights(void){ //Sets lights in down_buttons when pressed, turns them off when order's executed. 
+void set_down_button_lights(void){ 
   for (int etg = 1 ; etg<(N_FLOORS) ; ++etg){
     if (elev_get_button_signal(BUTTON_CALL_DOWN,etg)){
       elev_set_button_lamp(BUTTON_CALL_DOWN,etg,1);

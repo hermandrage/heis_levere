@@ -19,7 +19,7 @@
 // Number of signals and lamps on a per-floor basis (excl sensor)
 #define N_BUTTONS 3
 
-elev_motor_direction_t dir_before_stopped=DIRN_STOP;
+elev_motor_direction_t dir_before_stopped=DIRN_STOP;//remembers the direction of the elevator before i stops. Is used to handel specialcase when stopped.
 static const int lamp_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {LIGHT_UP1, LIGHT_DOWN1, LIGHT_COMMAND1},
     {LIGHT_UP2, LIGHT_DOWN2, LIGHT_COMMAND2},

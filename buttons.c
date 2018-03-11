@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-//checks if the the comand buttons are pressed, and adds the order to que if it doesn't already exsist
+
 void read_command_button(void) {
   for (int etg = 0 ; etg<4 ; ++etg){
     if (elev_get_button_signal(BUTTON_COMMAND,etg)){
@@ -16,7 +16,7 @@ void read_command_button(void) {
   }
 }
 
-//checks if the the UP and Down buttons are pressed, and adds the order to que if it doesn't already exsist
+
 void read_up_and_down_buttons(void) {
   for (int etg = 0 ; etg<N_FLOORS ; ++etg){
     if (etg<N_FLOORS-1){
@@ -32,7 +32,7 @@ void read_up_and_down_buttons(void) {
   }
 }
 
-//Checks if stop button is pressed, if pressed: Empty que and stops the elevator
+
 void read_stop_button(void){
   if (elev_get_stop_signal()){
       elev_set_stop_lamp(1);

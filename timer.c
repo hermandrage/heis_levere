@@ -12,7 +12,7 @@ void stop_timer(void){
   var_start_time=-1;
 }
 
-//checks if time since "start_timer" is greater than 3 seconds. returns 1 if true, 0 if false and -1 if timer is not yet started.
+
 int timer_is_timeout(void){
   if (var_start_time<0){
     return -1;
