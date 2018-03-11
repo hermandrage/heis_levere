@@ -5,14 +5,15 @@
 #include "buttons.h"
 #include "lights.h"
 #include "timer.h"
-//
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-int current_floor=-1;
+float current_floor=-1;
+bool emergensy_stop_already_pressed=false;
 
-
-int get_current_floor(void) {
+float get_current_floor(void) {
   return current_floor;
 }
 
@@ -21,6 +22,7 @@ void set_floor_variables(void){
   int temp_get_floor = elev_get_floor_sensor_signal();
   if (temp_get_floor > -1 && temp_get_floor < N_FLOORS){
     current_floor = temp_get_floor;
+    emergensy_stop_already_pressed=false;
   }
 }
 
@@ -32,8 +34,9 @@ void print_status(void){
     printf("\n");
     printf("VARIABLES:\n");
     printf("Current state %d",current_state);
-    printf("\nCURRENT FLOOR: %d\n", get_current_floor());
-    printf("CURRENT DIRECTION    %d\n", get_current_direction() );
+    printf("\nCURRENT FLOOR: %f\n", get_current_floor());
+    printf("CURRENT DIRECTION    %d\n", get_current_direction());
+    //printf("dir_before_stop: V")
     printf("------------------------------------------------------------ \n");
 }
 
@@ -150,16 +153,29 @@ void run_states(void){
 
     if (elev_get_floor_sensor_signal()!=-1){
       set_current_state(DOOR_OPEN);
-
+    }
+    if(get_dir_before_stopped()==DIRN_UP && !emergensy_stop_already_pressed){
+      current_floor+=0.5;
+      emergensy_stop_already_pressed=true;
+      printf("\n\ncurrent_floor: %f", current_floor);
+      printf("\n\n");
+    }
+    if(get_dir_before_stopped()==DIRN_DOWN && !emergensy_stop_already_pressed){
+      current_floor-=0.5;
+      emergensy_stop_already_pressed=true;
+      printf("\n\ncurrent_floor: %f", current_floor);
+      printf("\n\n");
     }
     else if(read_next_order()!=-1){
-      if(read_next_order()==current_floor){
+      /*if(read_next_order()==current_floor){
         if( get_dir_before_stopped()==DIRN_UP){
           set_current_state(DRIVE_DOWN);
+          set_dir_before_stopped(DIRN_UP);
           print_status();
         }
         else if( get_dir_before_stopped()==DIRN_DOWN){
           set_current_state(DRIVE_UP);
+          set_dir_before_stopped(DIRN_DOWN);
           print_status();
         }
       }
@@ -170,6 +186,12 @@ void run_states(void){
         if(read_next_order()-current_floor<0){
           set_current_state(DRIVE_DOWN);
         }
+      }*/
+      if(read_next_order()-current_floor>0){
+        set_current_state(DRIVE_UP);
+      }
+      if(read_next_order()-current_floor<0){
+        set_current_state(DRIVE_DOWN);
       }
     }
         break;

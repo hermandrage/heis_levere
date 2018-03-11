@@ -1,6 +1,6 @@
 
 void set_floor_variables(void);
-int get_current_floor(void);
+float get_current_floor(void);
 void print_status(void);
 
 typedef enum state_type { //all possible states for statemachine. NOTE: initialize is not a part of statemachine.
