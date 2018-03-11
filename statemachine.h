@@ -14,6 +14,7 @@ typedef enum state_type { //all possible states for statemachine. NOTE: initiali
 
 static state_t current_state;
 
-void set_current_state(state_t state);
-void print_current_state(void);
-void run_states(void);
+void set_current_state(state_t state);// sets the variable current_floor to the correct value and emergensy_stop_already_pressed to false
+void print_current_state(void);//prints the current state
+void print_status(void);//prints queue, current_state, current_floor and current_direction in a ordarly way.
+void run_states(void);// Runns a infinite while-loop, checking and swiching between states. 

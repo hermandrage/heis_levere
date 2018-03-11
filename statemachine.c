@@ -17,7 +17,7 @@ float get_current_floor(void) {
   return current_floor;
 }
 
-// sets the cariable current_floor to the correct value
+
 void set_floor_variables(void){
   int temp_get_floor = elev_get_floor_sensor_signal();
   if (temp_get_floor > -1 && temp_get_floor < N_FLOORS){
@@ -113,12 +113,9 @@ void run_states(void){
 
         case DRIVE_UP:
         elev_set_motor_direction(DIRN_UP);
-        if (current_direction!=DIRN_UP){//sets current_direction to DIRN_UP if not yet set.
-          current_direction=DIRN_UP;
-        }
-        int temp_current_floor=elev_get_floor_sensor_signal();//puts the value returned from floor sensor in a temporary variable.
+        current_direction=DIRN_UP;
 
-        if ( temp_current_floor != -1){//is activated if in a floor
+        if ( elev_get_floor_sensor_signal() != -1){//is activated if in a floor
           set_floor_variables();//updates current_floor
           if(check_if_should_stop(get_current_floor(), ORDER_UP)!=-1){
             current_state=DOOR_OPEN;
@@ -131,12 +128,9 @@ void run_states(void){
 
         case DRIVE_DOWN:// HER STARTER STATEN
         elev_set_motor_direction(DIRN_DOWN);
-        if (current_direction!=DIRN_DOWN){ //sets current_direction to DIRN_DOWN if not yet set.
-          current_direction=DIRN_DOWN;
+        current_direction=DIRN_DOWN;
 
-      }
-        int temp_current_floor2=elev_get_floor_sensor_signal();//puts the value returned from floor sensor in a temporary variable.
-        if ( temp_current_floor2 != -1){//is activated if in a floor
+        if ( elev_get_floor_sensor_signal() != -1){//is activated if in a floor
           set_floor_variables();//updates current_floor
           if(check_if_should_stop(get_current_floor(), ORDER_DOWN)!=-1){
             current_state=DOOR_OPEN;
@@ -150,20 +144,17 @@ void run_states(void){
     case STOPPED:
     elev_set_stop_lamp(0);
 
-    if (elev_get_floor_sensor_signal()!=-1){
-      set_current_state(DOOR_OPEN);
-    }
     if(get_dir_before_stopped()==DIRN_UP && !emergensy_stop_already_pressed){
       current_floor+=0.5;
       emergensy_stop_already_pressed=true;
-      printf("\n\ncurrent_floor: %f", current_floor);
-      printf("\n\n");
     }
     if(get_dir_before_stopped()==DIRN_DOWN && !emergensy_stop_already_pressed){
       current_floor-=0.5;
       emergensy_stop_already_pressed=true;
-      printf("\n\ncurrent_floor: %f", current_floor);
-      printf("\n\n");
+    }
+
+    if (elev_get_floor_sensor_signal()!=-1){
+      set_current_state(DOOR_OPEN);
     }
     else if(read_next_order()!=-1){
 
