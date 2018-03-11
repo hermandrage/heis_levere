@@ -69,7 +69,6 @@ void add_order_to_que(int floor,order_dir direction){//Checks if the new order a
     if (que[order_nr][0] == -1 && que[order_nr][1]== NO_ORDER){
       que[order_nr][0] = floor;
       que[order_nr][1]=direction;
-      printf("Order added to que\n");
       return;
     }
   }
@@ -95,7 +94,7 @@ void delete_orders_in_floor(int floor){//Deletes all orders in the floor from in
 }
 
 
-void print_que(void){ // prints que
+void print_que(void){ // prints queue
   for (int ord_nr=0; ord_nr<nr_possible_orders; ord_nr++){
     printf("ordernr: %d", ord_nr);
     printf("   floor %d", que[ord_nr][0]);

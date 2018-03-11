@@ -29,14 +29,13 @@ void set_floor_variables(void){
 
 void print_status(void){
     printf("------------------------------------------------------------ \n");
-    printf("QUE:\n");
+    printf("QUEUE:\n");
     print_que();
     printf("\n");
     printf("VARIABLES:\n");
     printf("Current state %d",current_state);
     printf("\nCURRENT FLOOR: %f\n", get_current_floor());
     printf("CURRENT DIRECTION    %d\n", get_current_direction());
-    //printf("dir_before_stop: V")
     printf("------------------------------------------------------------ \n");
 }
 
@@ -167,26 +166,7 @@ void run_states(void){
       printf("\n\n");
     }
     else if(read_next_order()!=-1){
-      /*if(read_next_order()==current_floor){
-        if( get_dir_before_stopped()==DIRN_UP){
-          set_current_state(DRIVE_DOWN);
-          set_dir_before_stopped(DIRN_UP);
-          print_status();
-        }
-        else if( get_dir_before_stopped()==DIRN_DOWN){
-          set_current_state(DRIVE_UP);
-          set_dir_before_stopped(DIRN_DOWN);
-          print_status();
-        }
-      }
-      else{
-        if(read_next_order()-current_floor>0){
-          set_current_state(DRIVE_UP);
-        }
-        if(read_next_order()-current_floor<0){
-          set_current_state(DRIVE_DOWN);
-        }
-      }*/
+
       if(read_next_order()-current_floor>0){
         set_current_state(DRIVE_UP);
       }
